@@ -4,7 +4,7 @@ use std::io::{self, Read, Write};
 const CHUNK_SIZE: usize = 16 * 1024;
 
 fn main() {
-    let silent = env::var("PV_SILENT").unwrap_or(String::new()).len() > 0;
+    let silent = !env::var("PV_SILENT").unwrap_or_default().is_empty();
     // dbg! macro example - NOTE: this is NOT for logging!
     // dbg!(silent);
     let mut total_bytes = 0;
