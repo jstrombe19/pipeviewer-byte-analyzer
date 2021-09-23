@@ -1,8 +1,11 @@
+use std::env;
 use std::io::{self, Read, Write};
 
 const CHUNK_SIZE: usize = 16 * 1024;
 
 fn main() {
+    let silent = env::var("PV_SILENT").unwrap_or(String::new()).len() > 0;
+    dbg!(silent);
     let mut total_bytes = 0;
     loop {
         let mut buffer = [0; CHUNK_SIZE];
@@ -11,7 +14,10 @@ fn main() {
             Ok(x) => x,
             Err(_) => break,
         };
-        total_bytes += num_read;
+        // when using dbg!() if you are also using the += (assignment operator)
+        // you will not get a value returned because the assignment operator does
+        // not return a value - it returns the unit type or empty type ()
+        dbg!(total_bytes += num_read);
         io::stdout().write_all(&buffer[..num_read]).unwrap();
     }
     eprintln!("num_read: {}", total_bytes);
