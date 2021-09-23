@@ -41,3 +41,15 @@ chmod a+x .git/hooks/pre-commit
 ```
 
 proved the failure functions correctly by intentionally adding a conditional statement that compared true to true {}
+
+previously discussed 2 different ways to handle errors in Rust:
+
+- unwrap() -> which will allow Rust to crash if it encounters an error
+
+_or_
+
+- match expressions -> which will allow you to catch the error in an explicit statement designed to define error handling
+
+it is also possible to handle errors using conditional statements, which allows us to define custom error messages, define error-specific
+behavior, and even output desired standard error codes. a breakdown of the standard error handling approaches as well as some customized
+approaches are included and commented out in main.rs
