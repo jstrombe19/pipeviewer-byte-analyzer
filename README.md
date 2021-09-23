@@ -53,3 +53,44 @@ _or_
 it is also possible to handle errors using conditional statements, which allows us to define custom error messages, define error-specific
 behavior, and even output desired standard error codes. a breakdown of the standard error handling approaches as well as some customized
 approaches are included and commented out in main.rs
+
+added clap and defined acceptable command line arguments. possible arguments can be found by running
+
+```bash
+cargo run -- -h
+```
+
+running with the following arguments produces the following results:
+
+```bash
+cargo run -- somefile
+```
+
+infile = "somefile"
+outfile = ""
+silent = false
+
+```bash
+cargo run -- somefile --outfile file.out
+```
+
+infile = "somefile"
+outfile = "file.out"
+silent = false
+
+```bash
+cargo run -- somefile --outfile file.out -s
+```
+
+infile = "somefile"
+outfile = "file.out"
+silent = true
+
+```bash
+PV_SILENT=1 cargo run -- somefile --outfile file.out
+```
+
+infile = "somefile"
+outfile = "file.out"
+silent = true
+

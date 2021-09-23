@@ -1,10 +1,33 @@
+use clap::{App, Arg};
 use std::env;
 use std::io::{self, ErrorKind, Read, Result, Write};
 
 const CHUNK_SIZE: usize = 16 * 1024;
 
 fn main() -> Result<()> {
-    let silent = !env::var("PV_SILENT").unwrap_or_default().is_empty();
+  let matches = App::new("pipeviewer")
+    .arg(Arg::with_name("infile")
+      .help("Read from a file instead of stdin")
+    )
+    .arg(Arg::with_name("outfile")
+      .short("o")
+      .long("outfile")
+      .takes_value(true)
+      .help("Write output to a file instead of stdout"),
+    )
+    .arg(Arg::with_name("silent")
+      .short("s")
+      .long("silent")
+    )
+    .get_matches();
+    let infile = matches.value_of("infile").unwrap_or_default();
+    let outfile = matches.value_of("outfile").unwrap_or_default();
+    let silent = if matches.is_present("silent") {
+      true
+    } else {
+      !env::var("PV_SILENT").unwrap_or_default().is_empty()
+    };
+    dbg!(infile, outfile, silent);
     // dbg! macro example - NOTE: this is NOT for logging!
     // dbg!(silent);
     let mut buffer = [0; CHUNK_SIZE];
