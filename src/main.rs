@@ -27,7 +27,8 @@ fn main() -> Result<()> {
     } else {
       !env::var("PV_SILENT").unwrap_or_default().is_empty()
     };
-    dbg!(infile, outfile, silent);
+    // to view the outcome or values of the variables, use the dbg! macro below
+    // dbg!(infile, outfile, silent);
     // dbg! macro example - NOTE: this is NOT for logging!
     // dbg!(silent);
     let mut buffer = [0; CHUNK_SIZE];
