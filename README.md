@@ -31,3 +31,13 @@ to test the assignment of the environment variable declared, the test was repeat
 ```bash
 echo "a string" | PV_SILENT=something cargo run
 ```
+
+added .git/hooks/pre-commit file in the project root directory
+
+defined failure cases and updated attributes on pre-commit to be executable using
+
+```bash
+chmod a+x .git/hooks/pre-commit
+```
+
+proved the failure functions correctly by intentionally adding a conditional statement that compared true to true {}
