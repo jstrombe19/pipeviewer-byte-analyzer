@@ -1,5 +1,5 @@
 [package]
-name = "pipeviewer"
+name = "pipeviewer-byte-analyzer"
 version = "0.1.0"
 authors = ["Jared Stromberg <jaredstromberg@gmail.com>"]
 edition = "2018"
