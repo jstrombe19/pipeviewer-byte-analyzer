@@ -3,7 +3,7 @@ use std::fs::File;
 use std::io::{self, BufReader, Read, Result};
 use std::sync::{Arc, Mutex};
 
-pub fn read(infile: &str, quit: Arc<Mutex<bool>>) -> Result<()> {
+pub fn read_loop(infile: &str, quit: Arc<Mutex<bool>>) -> Result<()> {
   let mut reader: Box<dyn Read> = if !infile.is_empty() {
     Box::new(BufReader::new(File::open(infile)?))
   } else {

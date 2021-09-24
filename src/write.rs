@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io::{self, BufWriter, ErrorKind, Result, Write};
 use std::sync::{Arc, Mutex};
 
-pub fn write(outfile: &str, quit: Arc<Mutex<bool>>) -> Result<()> {
+pub fn write_loop(outfile: &str, quit: Arc<Mutex<bool>>) -> Result<()> {
   let mut writer: Box<dyn Write> = if !outfile.is_empty() {
     Box::new(BufWriter::new(File::create(outfile)?))
   } else {

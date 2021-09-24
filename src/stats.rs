@@ -1,7 +1,7 @@
 use std::io::Result;
 use std::sync::{Arc, Mutex};
 
-pub fn stats(silent: bool, quit: Arc<Mutex<bool>>) -> Result<()> {
+pub fn stats_loop(silent: bool, quit: Arc<Mutex<bool>>) -> Result<()> {
   let mut total_bytes = 0;
   loop {
     // todo: receive the vector of bytes
