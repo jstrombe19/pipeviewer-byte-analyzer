@@ -1,6 +1,7 @@
 use clap::{App, Arg};
+use std::fs::File;
 use std::env;
-use std::io::{self, ErrorKind, Read, Result, Write};
+use std::io::{self, BufReader, BufWriter, ErrorKind, Read, Result, Write};
 
 const CHUNK_SIZE: usize = 16 * 1024;
 
@@ -31,12 +32,25 @@ fn main() -> Result<()> {
     // dbg!(infile, outfile, silent);
     // dbg! macro example - NOTE: this is NOT for logging!
     // dbg!(silent);
+
+    let mut reader: Box<dyn Read> = if !infile.is_empty() {
+      Box::new(BufReader::new(File::open(infile)?))
+    } else {
+      Box::new(BufReader::new(io::stdin()))
+    };
+
+    let mut writer: Box<dyn Write> = if !outfile.is_empty() {
+      Box::new(BufWriter::new(File::create(outfile)?))
+    } else {
+      Box::new(BufWriter::new(io::stdout()))
+    };
+
     let mut buffer = [0; CHUNK_SIZE];
     let mut total_bytes = 0;
     loop {
         // original position of buffer
         // let mut buffer = [0; CHUNK_SIZE];
-        let num_read = match io::stdin().read(&mut buffer) {
+        let num_read = match reader.read(&mut buffer) {
             Ok(0) => break,
             Ok(x) => x,
             Err(_) => break,
@@ -52,7 +66,7 @@ fn main() -> Result<()> {
         if !silent {
             eprint!("\r{}", total_bytes);
         }
-        if let Err(e) = io::stdout().write_all(&buffer[..num_read]) {
+        if let Err(e) = writer.write_all(&buffer[..num_read]) {
             // this is the destructured way to access ErrorKind, and requires the explicit
             // inclusion of ErrorKind in the std::io use statement above
             // the other way to do this is to drill down each level:
